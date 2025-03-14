@@ -1,0 +1,31 @@
+@startuml
+
+participant HTML_Page
+participant DAM_API
+database DAM_DB
+
+
+HTML_Page -> DAM_API: Retrieve Photo Metadata (photoID)
+DAM_API -> DAM_DB: Query Photo Metadata (photoID)
+DAM_DB --> DAM_API: Photo Metadata
+DAM_API --> HTML_Page: Photo Metadata
+alt Photo Found
+    HTML_Page -> HTML_Page: Determine Photo Side
+    HTML_Page -> DAM_API: Retrieve Related Photo Metadata (relatedImageID)
+    DAM_API -> DAM_DB: Query Related Photo Metadata (relatedImageID)
+    DAM_DB --> DAM_API: Related Photo Metadata
+    DAM_API --> HTML_Page: Related Photo Metadata
+    alt Related Photo Found
+        HTML_Page -> HTML_Page: Build Playlist Entry IDs
+        HTML_Page -> DAM_API: Create Playlist Object (entryIDs)
+        DAM_API -> DAM_DB: Add Playlist
+        DAM_DB --> DAM_API: Playlist ID
+        DAM_API --> HTML_Page: Playlist ID
+        HTML_Page -> HTML_Page: Embed Player (playlistID)
+    else Related Photo Not Found
+        HTML_Page -> HTML_Page: Display "Related Photo Not Found" Error
+    end
+else Photo Not Found
+    HTML_Page -> HTML_Page: Display "Photo Not Found" Error
+end
+@enduml
