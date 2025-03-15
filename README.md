@@ -23,7 +23,18 @@ Finally, the client-side interface uses this identifier to embed a media player 
 
 Throughout the process, error-handling mechanisms ensure that if a requested photograph or its counterpart is missing, appropriate messages inform the user.
 
-As a means to illustrate the ideation above, a simple web application to retrieve and embed Kaltura media entries and their associated flip side entries side by side using the Kaltura API is included, thus:
+Now, while the approach above is pretty much universal, as a practical illustration, here’s a simple web app that utilises the Kaltura API to fetch media entries and their flip-side entries, displaying them side by side. Thus:
 
 ![image](https://github.com/user-attachments/assets/dfc6105c-7a67-4a54-b956-4421f77f2102)
 
+## Features
+- Input a Kaltura Entry ID to fetch its metadata.
+- Extracts the flip side Entry ID from a predefined custom metadata field, e.g.`<BackOfThePhoto>
+- Embeds both the searched entry and its flip side entry as Kaltura players in iframes, displayed side by side.
+- Error handling for API requests and XML parsing.
+
+## Prerequisites
+- A Kaltura account with:
+  - Partner ID
+  - User Secret (Admin or User secret, depending on access needs)
+- Modern browser with support for `fetch`, `DOMParser`, and `URLSearchParams`.
