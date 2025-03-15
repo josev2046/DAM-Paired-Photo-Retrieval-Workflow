@@ -37,4 +37,5 @@ Now, while the academic approach outlined above is broadly applicable, here’s 
 - A Kaltura account with:
   - Partner ID
   - User Secret (Admin or User secret, depending on access needs)
+  - Custom Metadata Schema
 - Modern browser with support for `fetch`, `DOMParser`, and `URLSearchParams`.
