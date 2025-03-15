@@ -25,7 +25,7 @@ Throughout the process, error-handling mechanisms ensure that if a requested pho
 
 Now, while the academic approach outlined above is broadly applicable, here’s a practical interpretation of how it might work in the real world. In this app I use the Kaltura API (it's what I had at hand) to fetch media entries and their corresponding flip-side entries, displaying them side by side:
 
-![image](https://github.com/user-attachments/assets/dfc6105c-7a67-4a54-b956-4421f77f2102)
+![image](https://github.com/user-attachments/assets/1a82092a-ad1b-4082-9686-32d3d9e8ee2d)
 
 ## Features
 - Input a Kaltura Entry ID to fetch its metadata.
