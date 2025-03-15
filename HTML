@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kaltura Metadata Viewer with Embedded Players</title>
+    <title>Paired Photo Retrieval Workflow
+</title>
     <style>
         body { font-family: Arial, sans-serif; margin: 20px; }
         pre { background: #f4f4f4; padding: 10px; border-radius: 5px; }
@@ -29,21 +30,21 @@
     </style>
 </head>
 <body>
-    <h2>Retrieve and Embed Kaltura Entries</h2>
+    <h2>Paired Photo Retrieval Workflow</h2>
     <label for="entryId">Enter Entry ID:</label>
-    <input type="text" id="entryId" value="YOUR_DEFAULT_ENTRY_ID">
+    <input type="text" id="entryId" value="1_im5kapu9">
     <br>
     <button onclick="getMetadataAndEmbed()">Get and Embed</button>
     <pre id="result"></pre>
     <div id="iframeContainer"></div>
 
     <script>
-        // Configuration - Replace placeholders with actual values
+        // Configuration
         const config = {
-            partnerId: "YOUR_PARTNER_ID",
+            partnerId: "{partnerId}",
             serviceUrl: "https://www.kaltura.com/api_v3/index.php",
-            userSecret: "YOUR_USER_SECRET", // SECURITY WARNING: Use secure handling in production
-            uiConfId: "56390122" // Fixed UI Conf ID for embedding
+            userSecret: "{userSecret}", // SECURITY WARNING: Replace with secure handling in production
+            uiConfId: "{uiConfId}" // Fixed UI Conf ID for embedding
         };
 
         // Start a Kaltura session
