@@ -29,7 +29,7 @@ Now, while the approach above is pretty much universal, as a practical illustrat
 
 ## Features
 - Input a Kaltura Entry ID to fetch its metadata.
-- Extracts the flip side Entry ID from a predefined custom metadata field, e.g.`<BackOfThePhoto>
+- Extracts the flip side Entry ID from a predefined custom metadata field.
 - Embeds both the searched entry and its flip side entry as Kaltura players in iframes, displayed side by side.
 - Error handling for API requests and XML parsing.
 
