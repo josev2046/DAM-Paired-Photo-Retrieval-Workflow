@@ -23,7 +23,7 @@ Finally, the client-side interface uses this identifier to embed a media player 
 
 Throughout the process, error-handling mechanisms ensure that if a requested photograph or its counterpart is missing, appropriate messages inform the user.
 
-Now, while the approach above is pretty much universal, as a practical illustration, here’s a simple web app that utilises the Kaltura API to fetch media entries and their flip-side entries, displaying them side by side. Thus:
+Now, while the academic approach outlined above is largely universal, here’s a simple web app as a practical example of how it works in the real world. This app uses the Kaltura API to fetch media entries and their corresponding flip-side entries, displaying them side by side:
 
 ![image](https://github.com/user-attachments/assets/dfc6105c-7a67-4a54-b956-4421f77f2102)
 
