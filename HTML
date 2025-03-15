@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kaltura Metadata Viewer with Embedded Players</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        pre { background: #f4f4f4; padding: 10px; border-radius: 5px; }
+        button { margin-top: 10px; padding: 5px 10px; }
+        #iframeContainer { 
+            display: flex; 
+            gap: 20px; 
+            margin-top: 20px; 
+            flex-wrap: wrap; 
+        }
+        .iframe-wrapper { 
+            text-align: center; 
+        }
+        iframe { 
+            width: 560px; 
+            height: 395px; 
+            border: 0; 
+        }
+        .iframe-label { 
+            font-weight: bold; 
+            margin-bottom: 5px; 
+        }
+    </style>
+</head>
+<body>
+    <h2>Retrieve and Embed Kaltura Entries</h2>
+    <label for="entryId">Enter Entry ID:</label>
+    <input type="text" id="entryId" value="YOUR_DEFAULT_ENTRY_ID">
+    <br>
+    <button onclick="getMetadataAndEmbed()">Get and Embed</button>
+    <pre id="result"></pre>
+    <div id="iframeContainer"></div>
+
+    <script>
+        // Configuration - Replace placeholders with actual values
+        const config = {
+            partnerId: "YOUR_PARTNER_ID",
+            serviceUrl: "https://www.kaltura.com/api_v3/index.php",
+            userSecret: "YOUR_USER_SECRET", // SECURITY WARNING: Use secure handling in production
+            uiConfId: "56390122" // Fixed UI Conf ID for embedding
+        };
+
+        // Start a Kaltura session
+        async function startSession() {
+            try {
+                const formData = new URLSearchParams({
+                    service: "session",
+                    action: "start",
+                    secret: config.userSecret,
+                    type: "0", // User session
+                    partnerId: config.partnerId,
+                    expiry: "86400", // 24 hours
+                    format: "1" // JSON response
+                });
+
+                const response = await fetch(config.serviceUrl, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                    body: formData.toString()
+                });
+
+                if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+
+                const ks = await response.text();
+                return ks.replace(/^"|"$/g, ''); // Strip surrounding quotes from session key
+            } catch (error) {
+                console.error("Session Error:", error);
+                document.getElementById("result").innerText = `Error starting session: ${error.message}`;
+                return null;
+            }
+        }
+
+        // Create and embed a Kaltura iframe
+        function embedIframe(entryId, label, container) {
+            const iframeUrl = `https://cdnapisec.kaltura.com/p/${config.partnerId}/embedPlaykitJs/uiconf_id/${config.uiConfId}?iframeembed=true&entry_id=${entryId}`;
+
+            const wrapper = document.createElement('div');
+            wrapper.className = 'iframe-wrapper';
+
+            const labelDiv = document.createElement('div');
+            labelDiv.className = 'iframe-label';
+            labelDiv.textContent = label;
+
+            const iframe = document.createElement('iframe');
+            iframe.src = iframeUrl;
+            iframe.allow = 'autoplay *; fullscreen *; encrypted-media *';
+            iframe.allowFullscreen = true;
+            iframe.webkitallowfullscreen = true;
+            iframe.mozallowfullscreen = true;
+
+            wrapper.appendChild(labelDiv);
+            wrapper.appendChild(iframe);
+            container.appendChild(wrapper);
+        }
+
+        // Fetch metadata and embed players
+        async function getMetadataAndEmbed() {
+            const entryId = document.getElementById("entryId").value.trim();
+            if (!entryId) {
+                alert("Please enter an Entry ID.");
+                return;
+            }
+
+            const ks = await startSession();
+            if (!ks) return;
+
+            const container = document.getElementById("iframeContainer");
+            container.innerHTML = ''; // Clear previous iframes
+            document.getElementById("result").innerText = ''; // Clear previous errors
+
+            try {
+                // Fetch MRSS XML
+                const mrssResponse = await fetch(config.serviceUrl, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                    body: new URLSearchParams({
+                        service: "media",
+                        action: "getMrss",
+                        entryId: entryId,
+                        ks: ks,
+                        format: "1"
+                    }).toString()
+                });
+
+                if (!mrssResponse.ok) throw new Error(`MRSS HTTP error! Status: ${mrssResponse.status}`);
+
+                let mrssText = await mrssResponse.text();
+
+                // Strip double quotes from start and end
+                const chars = [...mrssText];
+                let start = chars[0].charCodeAt(0) === 0x22 ? 1 : 0; // Check for leading "
+                let end = mrssText.length;
+                if (chars[end - 1].charCodeAt(0) === 0x22) end -= 1; // Check for trailing "
+                else if (end >= 2 && chars[end - 2].charCodeAt(0) === 0x0a && chars[end - 1].charCodeAt(0) === 0x22) end -= 2; // Check for \n"
+                mrssText = mrssText.slice(start, end);
+
+                // Clean up the XML
+                mrssText = mrssText
+                    .replace(/\\\//g, '/') // Unescape slashes in closing tags
+                    .replace(/\\"/g, '"') // Unescape double quotes
+                    .replace(/\\'/g, "'") // Unescape single quotes
+                    .replace(/[\u0000-\u001F\u007F-\u009F]/g, '') // Remove control characters
+                    .replace(/[\u2018\u2019]/g, "'") // Normalize smart single quotes
+                    .replace(/[\u201c\u201d]/g, '"') // Normalize smart double quotes
+                    .replace(/\\n/g, '\n') // Interpret escaped newlines
+                    .replace(/\\t/g, '\t') // Interpret escaped tabs
+                    .trim(); // Remove leading/trailing whitespace
+
+                // Parse the XML
+                const parser = new DOMParser();
+                const xmlDoc = parser.parseFromString(mrssText, "text/xml");
+                const parserError = xmlDoc.querySelector("parsererror");
+                if (parserError) throw new Error("XML Parsing Error: " + parserError.textContent);
+
+                // Embed the searched entry
+                embedIframe(entryId, `Searched Entry: ${entryId}`, container);
+
+                // Extract and embed flip side ID
+                const customDataNode = xmlDoc.getElementsByTagName("customData")[0];
+                if (!customDataNode) throw new Error("customData node missing");
+
+                const metadataNode = customDataNode.getElementsByTagName("metadata")[0];
+                if (!metadataNode) throw new Error("metadata node missing");
+
+                const backOfPhotoNode = metadataNode.getElementsByTagName("BackOfThePhoto")[0];
+                if (!backOfPhotoNode) throw new Error("BackOfThePhoto node missing");
+
+                const flipSideId = backOfPhotoNode.textContent;
+                embedIframe(flipSideId, `Flip Side Entry: ${flipSideId}`, container);
+            } catch (error) {
+                console.error("Metadata Fetch Error:", error);
+                document.getElementById("result").innerText = `Error retrieving metadata: ${error.message}`;
+            }
+        }
+    </script>
+</body>
+</html>
