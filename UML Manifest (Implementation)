@@ -1,0 +1,33 @@
+@startuml
+participant HTML_Page
+participant DAM_API as "Kaltura API"
+database DAM_DB as "Kaltura DB"
+
+HTML_Page -> DAM_API: Start Session (partnerId, userSecret)
+DAM_API -> DAM_DB: Request Session Key
+DAM_DB --> DAM_API: Session Key (ks)
+DAM_API --> HTML_Page: Session Key (ks)
+
+HTML_Page -> DAM_API: Retrieve Photo Metadata (entryId, ks)
+DAM_API -> DAM_DB: Query Photo Metadata (entryId)
+DAM_DB --> DAM_API: MRSS XML
+DAM_API --> HTML_Page: MRSS XML
+
+alt Photo Found
+    HTML_Page -> HTML_Page: Parse XML & Extract Flip Side ID
+    alt Flip Side ID Found
+        HTML_Page -> DAM_API: Retrieve Related Photo Metadata (flipSideId, ks)
+        DAM_API -> DAM_DB: Query Related Photo Metadata (flipSideId)
+        DAM_DB --> DAM_API: Related Photo Metadata
+        DAM_API --> HTML_Page: Related Photo Metadata
+        HTML_Page -> HTML_Page: Embed Players (entryId, flipSideId)
+    else Flip Side ID Not Found
+        HTML_Page -> HTML_Page: Embed Player (entryId only)
+        HTML_Page -> HTML_Page: Display "Flip Side Not Found" Warning
+    end
+else Photo Not Found
+    HTML_Page -> HTML_Page: Display "Photo Not Found" Error
+end
+
+note right: Errors from API or parsing are displayed in #result
+@enduml
