@@ -29,5 +29,4 @@ else Photo Not Found
     HTML_Page -> HTML_Page: Display "Photo Not Found" Error
 end
 
-note right: Errors from API or parsing are displayed in #result
 @enduml
