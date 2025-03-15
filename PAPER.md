@@ -78,3 +78,8 @@ This study demonstrates the feasibility and efficacy of automating paired photog
 <a id="future-directions"></a>
 
 Future research could explore the integration of machine learning algorithms to automate metadata extraction and asset correlation. Additionally, the development of standardised metadata schemas for paired photographic assets would further enhance interoperability and accessibility across different archival systems.
+
+
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.15033283.svg)](https://doi.org/10.5281/zenodo.15033283)
+
+
