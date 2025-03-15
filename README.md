@@ -5,7 +5,7 @@ This repository documents the workflow for dynamic retrieval and presentation of
 ![archive_photo_stitcher](https://github.com/user-attachments/assets/166fa493-f01d-4f9d-80b8-6d51edd68896)
 
 
-The ideal workflow begins when a client-side interface requests a specific photographic asset from a Digital Asset Management (DAM) system. It does so by sending a metadata retrieval request to the DAM API, including a unique identifier for the desired photograph.
+This pattern begins with a client-side interface that requests a specific photographic asset from a Digital Asset Management (DAM) system. It does so by sending a metadata retrieval request to the DAM API, including a unique identifier for the desired photograph.
 
 Upon receiving the request, the DAM API queries the DAM database to retrieve the associated metadata. The database responds with the metadata, which the API then forwards to the client-side interface.
 
