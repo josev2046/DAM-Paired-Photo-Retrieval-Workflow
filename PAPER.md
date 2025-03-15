@@ -1,6 +1,6 @@
 # Automating Paired Photographic Asset Retrieval and Presentation in Digital Archives
 
-**Author(s):** Jose M Barea Velazquez, Independent Researcher and Principal Solutions Architect
+**Author(s):** Jose M. Barea Velazquez, MA, Independent Researcher and Lecturer, Principal Solutions and Software Architect.
 
 **Date:** 15th of March, 2025
 
