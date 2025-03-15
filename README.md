@@ -27,6 +27,10 @@ Now, while the academic approach outlined above is broadly applicable, here’s 
 
 ![image](https://github.com/user-attachments/assets/1a82092a-ad1b-4082-9686-32d3d9e8ee2d)
 
+## Walk-through
+
+https://github.com/user-attachments/assets/e8960f0f-9a79-4e98-a2c9-87c5516b3f6d
+
 ## Features
 - Input a Kaltura Entry ID to fetch its metadata.
 - Extracts the flip side Entry ID from a predefined custom metadata field.
