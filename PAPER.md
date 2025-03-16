@@ -1,8 +1,6 @@
 # Automating Paired Photographic Asset Retrieval and Presentation in Digital Archives
 
-**Author(s):** Jose M. Barea Velazquez, MA, Independent Researcher and Lecturer, Principal Solutions and Software Architect.
-
-**Date:** 15th of March, 2025
+[![DOI](https://zenodo.org/badge/948688964.svg)](https://doi.org/10.5281/zenodo.15033282)
 
 **Abstract:**
 
@@ -80,6 +78,5 @@ This study demonstrates the feasibility and efficacy of automating paired photog
 Future research could explore the integration of machine learning algorithms to automate metadata extraction and asset correlation. Additionally, the development of standardised metadata schemas for paired photographic assets would further enhance interoperability and accessibility across different archival systems.
 
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.15033283.svg)](https://doi.org/10.5281/zenodo.15033283)
 
 
