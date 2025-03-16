@@ -43,3 +43,9 @@ https://github.com/user-attachments/assets/e8960f0f-9a79-4e98-a2c9-87c5516b3f6d
   - User Secret (Admin or User secret, depending on access needs)
   - Custom Metadata Schema
 - Modern browser with support for `fetch`, `DOMParser`, and `URLSearchParams`.
+
+  
+
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.15033283.svg)](https://doi.org/10.5281/zenodo.15033283)
+
+
