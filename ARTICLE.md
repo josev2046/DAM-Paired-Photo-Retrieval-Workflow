@@ -15,3 +15,5 @@ https://github-production-user-asset-6210df.s3.amazonaws.com/15835851/423159095-
 [Paired Photo Retrieval Workflow.]
 
 This isn't merely a technical solution; it's a narrative approach to preservation. By automating the retrieval of paired assets, we're enabling the stories they tell to be more readily accessible. The ability to quickly and accurately present these paired items can breathe new life into archived collections. We are thus bridging the gap between isolated images and their collective narrative, ensuring that the full story is preserved for future generations.
+
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.15033283.svg)](https://doi.org/10.5281/zenodo.15033283)
